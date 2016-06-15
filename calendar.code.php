@@ -1,8 +1,8 @@
 <?php
-    global $dated,$days,$cc;
+    global $dated,$days,$cc,$calendar;
 
     function page_init(){
-        global $dated,$days,$cc;
+        global $dated,$days,$cc,$calendar;
         $days = 30; // A default value for the days
         $cc = "US"; // Default value for the country code
         $dated = new DateTime();
@@ -20,6 +20,8 @@
         if(isset($_GET["cc"])){
             $cc = $_GET["cc"];
         }
+
+        $calendar = new Calendar($cc);
     }
 
     // We start the page.

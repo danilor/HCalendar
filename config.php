@@ -1,2 +1,2 @@
 <?php
-    require_once("inc/functions.php");
+    require_once("classes/Calendar.class.php");

@@ -11,7 +11,7 @@
 
                     <br />
                     <?php
-                        echo get_calendar_month_year($dated->format("m"),$dated->format("Y"),true); // This function should be the one
+                        echo $calendar->getCalendarMonthYear($dated->format("m"),$dated->format("Y"),true); // This function should be the one
                     ?>
                 </div>
             </div>
