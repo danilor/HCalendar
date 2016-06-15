@@ -24,3 +24,7 @@
 .calendar_day_empty{
     background-color: lightgrey;
 }
+
+.calendar_holiday{
+    background-color: orange!important;
+}

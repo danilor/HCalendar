@@ -8,6 +8,7 @@ class Calendar{
     private $headings = array('Su','Mo','Tu','We','Th','Fr','Sa');
     private $last_calendar = "";
     private $allowed_years = [2008]; //This is the list of years that can use the function of getting the holidays
+    private $base_api_url = "http://holidayapi.com/v1/holidays";
     // cc means country code
     public function __construct($cc = ''){
             $this->country_code = $cc;
@@ -37,6 +38,13 @@ class Calendar{
         $calendar_day_number = 'calendar_day_number';
         $calendar_day_weekend = 'calendar_day_weekend';
         $calendar_day_weekday = 'calendar_day_weekday';
+
+
+        if(in_array($year,$this->allowed_years)){
+            //We have to bring the holidays
+            $this->holidays = ($this->getHolidays($year,$month));
+        }
+
         // Open the table
         $calendar = "";
         // Default values for year and month
@@ -76,23 +84,36 @@ class Calendar{
         for($list_day = 1; $list_day <= $days_in_month; $list_day++) {
 
             $extra = "";
+            $holyday = "";
+            $holyday_class = "";
             if($first_day_month == 0 || $first_day_month == 6){
                 $extra = " " . $calendar_day_weekend;
             }else{
                 $extra = " " . $calendar_day_weekday;
             }
 
+
             $fm = str_pad($month,2,"0",STR_PAD_LEFT).str_pad($list_day,2,"0",STR_PAD_LEFT).str_pad($year,4,"0",STR_PAD_LEFT);
+            $fmh = str_pad($month,2,"0",STR_PAD_LEFT).str_pad($list_day,2,"0",STR_PAD_LEFT);
+//var_dump($fmh,$this->holidays);
+            if(array_key_exists($fmh,$this->holidays)){
+
+                $holyday = $this->holidays[$fmh];
+                $holyday_class = " calendar_holiday";
+            }
+
+            //var_dump($this->holidays);
+
 
             if(count($onlydays) == 0){
-                $calendar .= '<td df="'.($month.$list_day.$year).'" ld="'.$list_day.'" dc="'.$day_counter.'" fdm="'.$first_day_month.'" class="'.$calendar_day . $extra . '">';
+                $calendar .= '<td h="'.$holyday.'" df="'.($month.$list_day.$year).'" ld="'.$list_day.'" dc="'.$day_counter.'" fdm="'.$first_day_month.'" class="'.$calendar_day . $extra . $holyday_class . '">';
                 $calendar .= '<div class="'.$calendar_day_number.'">' . $list_day . '</div>';
                 $calendar .= str_repeat('<p> </p>', 2);
                 $calendar .= '</td>';
             }else{
 
                 if( in_array($fm,$onlydays)  ){
-                    $calendar .= '<td df="'.($fm).'" ld="'.$list_day.'" dc="'.$day_counter.'" fdm="'.$first_day_month.'" class="'.$calendar_day . $extra . '">';
+                    $calendar .= '<td fmh="'.$fmh.'" h="'.$holyday.'" df="'.($fm).'" ld="'.$list_day.'" dc="'.$day_counter.'" fdm="'.$first_day_month.'" class="'.$calendar_day . $extra . $holyday_class . '">';
                     $calendar .= '<div class="'.$calendar_day_number.'">' . $list_day . '</div>';
                     $calendar .= str_repeat('<p> </p>', 2);
                     $calendar .= '</td>';
@@ -131,4 +152,47 @@ class Calendar{
     public function getLastCalendar(){
         return $this->last_calendar;
     }
+
+
+    private function getHolidays($year = null,$month = null){
+            $holidays = []; // This variable is suppose to keep all holidays. The key will be a number on the format: MonthDay to easily find it. This wont support multiple holidays on the same day if there were the case.
+            $code = $this->country_code;
+            if($year == null || !is_numeric($year)){
+                $year = (int)date("Y");
+            }
+            if($month == null || !is_numeric($month)){
+                $month = (int)date("m");
+            }
+            $url = $this->base_api_url . "?country=".urlencode($code)."&year=".urlencode($year)."&month=".urlencode($month);
+            $information = null;
+            try{
+                $information = json_decode($this->execute_curl($url));
+            }catch (Exception $err){
+                //var_dump($err);
+                //An error was throw!!
+            }
+            //var_dump($information);
+            if($information != null && isset($information->holidays)){
+                //var_dump( $information->holidays );
+                foreach( $information->holidays AS $h ){
+                    $date = strtotime($h->date);
+                    $holidays[date('md',$date)] = $h->name;
+                }
+            }
+            //var_dump($holidays);
+            return $holidays;
+    }
+
+    private function execute_curl($url){
+        $ch = curl_init();
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+        $output=curl_exec($ch);
+        curl_close($ch);
+        if(@curl_error($ch) !== false){
+            throw new Exception(curl_error($ch));
+        }
+        return $output;
+    }
+
 }
