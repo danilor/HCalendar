@@ -9,17 +9,21 @@
                     <form name="days_selection" method="GET" target="_self" action="">
                         <p>
                             <label>Date *</label><br />
-                            <input type="text" name="date" id="date" />
+                            <input class="datepicker" type="text" name="date" id="date" required="required" />
                         </p>
                         <p>
                             <label>Number of Days *</label><br />
-                            <input type="number" name="days" id="days" />
+                            <input type="number" min="0" name="days" id="days" required="required" />
                         </p>
                         <p>
                             <label>Country Code *</label><br />
-                            <input type="text" name="cc" id="cc" />
+                            <input type="text" name="cc" id="cc" required="required" />
+                        </p>
+                        <p>
+                            <input type="submit" value="GET" />
                         </p>
                     </form>
+
                 </div>
         </div>
     </body>
