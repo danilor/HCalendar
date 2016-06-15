@@ -27,6 +27,8 @@ class Calendar{
     //This function should return the HTML of the calendar
     // param @onlydays If this param is different from null, then we are only going to print the days in this parameter
     public function getCalendarMonthYear($month = null,$year = null,$withheader = false,$onlydays = [] ){
+
+
         $calendar_row_class = 'calendar_row';
         $calendar_day = 'calendar_day';
         $calendar_day_empty = 'calendar_day_empty';
@@ -80,10 +82,29 @@ class Calendar{
                 $extra = " " . $calendar_day_weekday;
             }
 
-            $calendar .= '<td ld="'.$list_day.'" dc="'.$day_counter.'" fdm="'.$first_day_month.'" class="'.$calendar_day . $extra . '">';
-            $calendar .= '<div class="'.$calendar_day_number.'">' . $list_day . '</div>';
-            $calendar .= str_repeat('<p> </p>', 2);
-            $calendar .= '</td>';
+            $fm = str_pad($month,2,"0",STR_PAD_LEFT).str_pad($list_day,2,"0",STR_PAD_LEFT).str_pad($year,4,"0",STR_PAD_LEFT);
+
+            if(count($onlydays) == 0){
+                $calendar .= '<td df="'.($month.$list_day.$year).'" ld="'.$list_day.'" dc="'.$day_counter.'" fdm="'.$first_day_month.'" class="'.$calendar_day . $extra . '">';
+                $calendar .= '<div class="'.$calendar_day_number.'">' . $list_day . '</div>';
+                $calendar .= str_repeat('<p> </p>', 2);
+                $calendar .= '</td>';
+            }else{
+
+                if( in_array($fm,$onlydays)  ){
+                    $calendar .= '<td df="'.($fm).'" ld="'.$list_day.'" dc="'.$day_counter.'" fdm="'.$first_day_month.'" class="'.$calendar_day . $extra . '">';
+                    $calendar .= '<div class="'.$calendar_day_number.'">' . $list_day . '</div>';
+                    $calendar .= str_repeat('<p> </p>', 2);
+                    $calendar .= '</td>';
+                }else{
+                    $calendar .= '<td df="'.($fm).'" ld="'.$list_day.'" dc="'.$day_counter.'" fdm="'.$first_day_month.'" class="'.$calendar_day_empty . '">';
+                    $calendar .= '<div class="">&nbsp;</div>';
+                    $calendar .= str_repeat('<p> </p>', 2);
+                    $calendar .= '</td>';
+                }
+
+            }
+
             if ($first_day_month == 6) {
                 $calendar .= '</tr>';
                 if (($day_counter + 1) != $days_in_month) {

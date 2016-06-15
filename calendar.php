@@ -11,7 +11,7 @@
 
                     <br />
                     <p>
-                        Days to show:
+                        <strong>Days to show:</strong>
                         <?php
                             foreach($days_array AS $d){
                                 echo $d." ";
@@ -22,9 +22,8 @@
                     <?php
                         foreach($months_array AS $m){
                             $mY = explode("-",$m);
-                            echo $calendar->getCalendarMonthYear((int)$mY[0],(int)$mY[1],true); // This function should be the one
+                            echo $calendar->getCalendarMonthYear((int)$mY[0],(int)$mY[1],true,$days_array); // This function should be the one
                         }
-
                     ?>
                 </div>
             </div>
