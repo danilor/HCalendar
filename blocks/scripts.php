@@ -2,6 +2,7 @@
 <script type="text/javascript" src="../assets/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../js/moment.2.13.0.min.js"></script>
 <script type="text/javascript" src="../js/bootstrap-datetimepicker-4.17.37.js"></script>
+<script type="text/javascript" src="../js/tipr.min.js"></script>
 <script type="text/javascript">
 
     $( document).ready(function(){
@@ -10,6 +11,7 @@
             format: 'MM/DD/YYYY',
             showTodayButton:true,
         });
+        $('.calendar_holiday').tipr();
     });
 
 </script>

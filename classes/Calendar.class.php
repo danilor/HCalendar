@@ -106,14 +106,14 @@ class Calendar{
 
 
             if(count($onlydays) == 0){
-                $calendar .= '<td h="'.$holyday.'" df="'.($month.$list_day.$year).'" ld="'.$list_day.'" dc="'.$day_counter.'" fdm="'.$first_day_month.'" class="'.$calendar_day . $extra . $holyday_class . '">';
+                $calendar .= '<td data-tip="'.$holyday.'" df="'.($month.$list_day.$year).'" ld="'.$list_day.'" dc="'.$day_counter.'" fdm="'.$first_day_month.'" class="'.$calendar_day . $extra . $holyday_class . '">';
                 $calendar .= '<div class="'.$calendar_day_number.'">' . $list_day . '</div>';
                 $calendar .= str_repeat('<p> </p>', 2);
                 $calendar .= '</td>';
             }else{
 
                 if( in_array($fm,$onlydays)  ){
-                    $calendar .= '<td fmh="'.$fmh.'" h="'.$holyday.'" df="'.($fm).'" ld="'.$list_day.'" dc="'.$day_counter.'" fdm="'.$first_day_month.'" class="'.$calendar_day . $extra . $holyday_class . '">';
+                    $calendar .= '<td fmh="'.$fmh.'" data-tip="'.$holyday.'" df="'.($fm).'" ld="'.$list_day.'" dc="'.$day_counter.'" fdm="'.$first_day_month.'" class="'.$calendar_day . $extra . $holyday_class . '">';
                     $calendar .= '<div class="'.$calendar_day_number.'">' . $list_day . '</div>';
                     $calendar .= str_repeat('<p> </p>', 2);
                     $calendar .= '</td>';
