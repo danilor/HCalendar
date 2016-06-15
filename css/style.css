@@ -6,7 +6,21 @@
 .calendar_class td{
     border: 1px solid black;
 }
-
 .calendar_day_header{
+    background-color: lightblue;
+}
+.calendar_day_header , .calendar_day_number{
     font-weight: bold;
+}
+
+.calendar_day_weekend{
+    background-color: yellow;
+}
+
+.calendar_day_weekday{
+    background-color: green;
+}
+
+.calendar_day_empty{
+    background-color: lightgrey;
 }
