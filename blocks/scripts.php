@@ -8,6 +8,7 @@
         $('.datepicker').datetimepicker({
             useCurrent:true,
             format: 'MM/DD/YYYY',
+            showTodayButton:true,
         });
     });
 

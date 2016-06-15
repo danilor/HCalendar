@@ -6,7 +6,7 @@
         <div class="wrapper">
                 <div class="col-xs-12">
                     <h1>Holidays Calendar</h1>
-                    <form name="days_selection" method="GET" target="_self" action="">
+                    <form name="days_selection" method="GET" target="_self" action="calendar.php">
                         <p>
                             <label>Date *</label><br />
                             <input class="datepicker" type="text" name="date" id="date" required="required" />
