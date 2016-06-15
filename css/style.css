@@ -1,0 +1,12 @@
+.calendar_class{
+    text-align: center;
+    width: 50%;
+}
+
+.calendar_class td{
+    border: 1px solid black;
+}
+
+.calendar-day-head{
+    font-weight: bold;
+}
