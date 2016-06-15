@@ -10,8 +10,21 @@
                     <h4>Date since: <?php echo $dated->format("m/d/Y") ?> | Days: <?php echo $days ?> | Country Code: <?php echo $cc ?></h4>
 
                     <br />
+                    <p>
+                        Days to show:
+                        <?php
+                            foreach($days_array AS $d){
+                                echo $d." ";
+                            }
+                        ?>
+                    </p>
+                    <br />
                     <?php
-                        echo $calendar->getCalendarMonthYear($dated->format("m"),$dated->format("Y"),true); // This function should be the one
+                        foreach($months_array AS $m){
+                            $mY = explode("-",$m);
+                            echo $calendar->getCalendarMonthYear((int)$mY[0],(int)$mY[1],true); // This function should be the one
+                        }
+
                     ?>
                 </div>
             </div>

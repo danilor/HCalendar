@@ -50,7 +50,7 @@ class Calendar{
         $dated -> modify('first day of this month'); // There is no actual need to move to the first day of the month, but just in case.
 
         if($withheader){
-            $calendar .= "<p class='".$calendar_title_class."'>".$dated->format("F")."</p>"; //This is to print the full month name
+            $calendar .= "<p class='".$calendar_title_class."'>".$dated->format("F Y")."</p>"; //This is to print the full month name
         }
 
         $calendar .= '<table class="calendar_class" id="calendar_table">';
